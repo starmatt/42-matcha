@@ -9,8 +9,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 /** Routes resources */
-const addUser = require('./routes/addUser');
-// console.log(addUser);
+const user = require('./routes/user');
+// more to come
 
 const connection = mysql.createConnection({
     host: '127.0.0.1',
@@ -32,4 +32,5 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.listen(port, () => console.log(`am i alive ? ${port}`));
 
-app.post('/users/add', addUser.addUser);
+app.post('/user/add', user.add);
+app.post('/user/:id/edit', user.edit);
