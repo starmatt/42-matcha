@@ -8,11 +8,11 @@ const routes = require('./routes');
 // const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
-
+    
 const connection = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
-    password: 'root',
+    password: '',
     database: 'matcha'
 });
 
@@ -21,7 +21,7 @@ connection.connect((err) => {
         throw err;
     }
     console.log('connected to db');
-});
+})  ;
 
 global.db = connection;
 
