@@ -1,7 +1,6 @@
+require('dotenv').config();
 const express = require('express');
-
 const app = express();
-const port = 8081;
 
 const mysql = require('mysql');
 const http = require('http');
@@ -13,10 +12,10 @@ const user = require('./routes/user');
 // more to come
 
 const connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: '',
-    database: 'matcha'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
 });
 
 connection.connect((err) => {
@@ -30,7 +29,7 @@ global.db = connection;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.listen(port, () => console.log(`am i alive ? ${port}`));
+app.listen(process.env.APP_PORT, () => console.log(`Started at ${process.env.APP_URL}:${process.env.APP_PORT}`));
 
 app.post('/user/add', user.add);
 app.post('/user/:id/edit', user.edit);

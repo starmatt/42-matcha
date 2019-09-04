@@ -1,18 +1,23 @@
 module.exports = {
     add: (req, res) => {
+        const bcrypt = require('bcrypt');
         const data = req.query;
-        const query = `INSERT INTO users (email, password, username) VALUES ('${data.email}', '${data.password}', '${data.username}');`;
 
-        db.query(query, (error, results, fields) => {
-            if (error) {
-                console.log(error.sqlMessage);
-            }
+        bcrypt.hash(data.password, 10, (error, hash) => {
+            const query = `INSERT INTO users (email, password, username) VALUES ('${data.email}', '${hash}', '${data.username}');`;
 
-            res.send(results);
+            db.query(query, (error, results, fields) => {
+                if (error) {
+                    console.log(error.sqlMessage);
+                }
+
+                res.send(results);
+            });
         });
     },
 
     edit: (req, res) => {
+        console.log(req);
         const id = req.params.id;
         const data = req.query;
         let query = 'UPDATE users SET';
