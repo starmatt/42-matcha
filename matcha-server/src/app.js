@@ -22,14 +22,14 @@ connection.connect((err) => {
     if (err) {
         throw err;
     }
-    console.log('connected to db');
+    console.log('> Database connection successful');
 });
 
 global.db = connection;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.listen(process.env.APP_PORT, () => console.log(`Started at ${process.env.APP_URL}:${process.env.APP_PORT}`));
+app.listen(process.env.APP_PORT, () => console.log(`> Started at ${process.env.APP_URL}:${process.env.APP_PORT}`));
 
 app.post('/user/add', user.add);
 app.post('/user/:id/edit', user.edit);
