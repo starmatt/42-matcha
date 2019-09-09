@@ -1,3 +1,5 @@
+'use strict';
+
 require('dotenv').config();
 const express = require('express');
 const app = express();
@@ -6,10 +8,10 @@ const mysql = require('mysql');
 const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
+global._ = require('lodash');
 
-/** Routes resources */
+/** Routes resources (Controllers ?) */
 const user = require('./routes/user');
-// more to come
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -33,3 +35,9 @@ app.listen(process.env.APP_PORT, () => console.log(`> Started at ${process.env.A
 
 app.post('/user/add', user.add);
 app.post('/user/:id/edit', user.edit);
+
+// const User = require('./models/User');
+
+// User.find(1, (user) => {
+//     console.log(user);
+// });

@@ -22,6 +22,6 @@
     "req-flash": "0.0.3"
   },
   "devDependencies": {
-    "eslint": "^6.0.0"
+    "eslint": "^6.3.0"
   }
 }
