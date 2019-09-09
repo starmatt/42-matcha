@@ -1,4 +1,4 @@
-module.exports = {
+const schemas = {
     user: {
         id: null,
         email: null,
@@ -8,3 +8,5 @@ module.exports = {
         updated_at: null
     }
 }
+
+export default schemas;
