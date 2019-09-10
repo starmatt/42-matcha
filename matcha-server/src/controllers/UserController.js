@@ -11,9 +11,7 @@ const UserController = {
     },
 
     edit: (req, res) => {
-        const id = req.params.id;
-
-        User.find(id, (user) => { 
+        User.find(req.params.id, (user) => { 
             user.save(req.query, (results) => {
                 res.send(results);
             });
