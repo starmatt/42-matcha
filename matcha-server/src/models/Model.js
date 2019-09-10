@@ -75,8 +75,8 @@ export default class Model
         const values = [];
         let query;
 
-        Object.keys(data).forEach((item, index, array) => {
-            values.push(`${item} = '${data[item]}'`);
+        Object.keys(data).forEach((key) => {
+            values.push(`${key} = '${data[key]}'`);
         });
 
         query = `UPDATE ${this.table} SET ${values.join(', ')} WHERE id=${id};`;
