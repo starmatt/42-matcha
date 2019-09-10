@@ -1,76 +1,21 @@
-const bcrypt = require('bcrypt');
-const schemas = require('../schemas');
+import schemas from '../schemas';
+import Model from './Model';
 
-// Constructor
-const User = function (data) {
-    this.data = this.fill(data);
-}
-
-// Prototype methods
-User.prototype.get = function (prop) {
-    return this.data[prop];
-}
-
-User.prototype.set = function (prop, value) {
-    this.data[prop] = value;
-}
-
-User.prototype.save = function (data, callback) {
-    if (this.data.id) {
-        return User.update(this.data.id, data, callback);
+export default class User extends Model
+{
+    constructor(data) {
+        super(); // This is needed to be able use 'this' in the child class context. Why ? IDK.
+        this.schema = schemas.user;
+        this.data = this.fill(data);
     }
 
-    return User.insert(this.data, callback);
+    static get table() { // The table name as a static property, so it can be used in static methods
+        return 'users';
+    }
+
+    // The properties that are not automatically handled by the database,
+    // basically anything that isn't a timestamp or the ID
+    static get fillable() {
+        return ['email', 'password', 'username'];
+    }
 }
-
-User.prototype.fill = function (data) {
-    const sanitized = data || {}; 
-    const schema = schemas.user;
-
-    return _.pick(_.defaults(sanitized, schema), _.keys(schema));
-}
-
-// Static methods
-User.find = function (id, callback) {
-    const query = `SELECT * FROM users WHERE id=${id}`;
-
-    db.query(query, (error, results, fields) => {
-        if (error) throw error;
-
-        callback(new User(JSON.parse(JSON.stringify(results[0]))));
-    });
-}
-
-User.insert = function (data, callback) {
-    bcrypt.hash(data.password, 10, (error, hash) => {
-        const query = `INSERT INTO users (email, password, username) VALUES ('${data.email}', '${hash}', '${data.username}');`
-
-        db.query(query, (error, results, fields) => {
-            if (error) throw error;
-
-            callback(results);
-        });
-    });
-}
-
-User.update = function (id, data, callback) {
-    let query = 'UPDATE users SET';
-
-    Object.keys(data).forEach((item, index, array) => {
-        query += ` ${item} = '${data[item]}'`;
-
-        if (index < array.length - 1) {
-            query += ',';
-        }
-    });
-
-    query += ` WHERE id=${id};`;
-
-    db.query(query, (error, results, fields) => {
-        if (error) throw error;
-
-        callback(results);
-    });
-}
-
-module.exports = User;

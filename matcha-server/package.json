@@ -4,7 +4,7 @@
   "description": "Make-your-own dating website project",
   "main": "src/app.js",
   "scripts": {
-    "start": "nodemon src/app.js",
+    "start": "nodemon --exec babel-node src/app.js",
     "migrate": "node src/migration.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,11 +17,14 @@
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "mysql": "^2.17.1",
-    "mysql-migrations": "^1.0.6",
-    "nodemon": "^1.19.2",
     "req-flash": "0.0.3"
   },
   "devDependencies": {
-    "eslint": "^6.3.0"
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@babel/preset-env": "^7.6.0",
+    "eslint": "^6.3.0",
+    "mysql-migrations": "^1.0.6",
+    "nodemon": "^1.19.2"
   }
 }

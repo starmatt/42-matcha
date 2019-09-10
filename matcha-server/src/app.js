@@ -1,17 +1,16 @@
 'use strict';
 
-require('dotenv').config();
-const express = require('express');
+import 'dotenv/config';
+import express from 'express';
+import mysql from 'mysql';
+import http from 'http';
+import path from 'path';
+import bodyParser from 'body-parser';
+
 const app = express();
 
-const mysql = require('mysql');
-const http = require('http');
-const path = require('path');
-const bodyParser = require('body-parser');
-global._ = require('lodash');
-
-/** Routes resources (Controllers ?) */
-const user = require('./routes/user');
+// Controllers
+import UserController from './controllers/UserController';
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -20,10 +19,9 @@ const connection = mysql.createConnection({
     database: process.env.DB_NAME
 });
 
-connection.connect((err) => {
-    if (err) {
-        throw err;
-    }
+connection.connect((error) => {
+    if (error) throw error;
+
     console.log('> Database connection successful');
 });
 
@@ -33,11 +31,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.listen(process.env.APP_PORT, () => console.log(`> Started at ${process.env.APP_URL}:${process.env.APP_PORT}`));
 
-app.post('/user/add', user.add);
-app.post('/user/:id/edit', user.edit);
+app.post('/user/add', UserController.add);
+app.post('/user/:id/edit', UserController.edit);
 
-// const User = require('./models/User');
+// TESTING
+import User from './models/User';
 
 // User.find(1, (user) => {
-//     console.log(user);
+//     user.set('username', 'MUAHAHAH');
+//     user.save(null, (results) => {
+//         console.log(results);
+//     })
+// });
+
+// const u = new User({
+//     'email': 'lol@email',
+//     'username': 'uname',
+//     'password': 'password'
+// });
+
+// u.save(null, (results) => {
+//     console.log(results);
 // });
