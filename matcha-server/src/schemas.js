@@ -6,7 +6,14 @@ const schemas = {
         username: null,
         created_at: null,
         updated_at: null
+    },
+
+    message:{
+        id: null,
+        message: null,
+        created_at: null,
+        updated_at: null
     }
-}
+};
 
 export default schemas;

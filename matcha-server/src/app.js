@@ -11,6 +11,7 @@ const app = express();
 
 // Controllers
 import UserController from './controllers/UserController';
+import MessageController from './controllers/messageController';
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -33,6 +34,13 @@ app.listen(process.env.APP_PORT, () => console.log(`> Started at ${process.env.A
 
 app.post('/user/add', UserController.add);
 app.post('/user/:id/edit', UserController.edit);
+app.post('/user/:id/delete', UserController.delete);
+
+app.post('/message/add', MessageController.add);
+app.post('/message/:id/edit', MessageController.edit);
+app.post('/message/:id/delete', MessageController.delete);
+
+
 
 // TESTING
 import User from './models/User';

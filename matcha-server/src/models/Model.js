@@ -3,6 +3,8 @@ import _ from 'lodash';
 export default class Model
 {
     constructor(data) {
+
+
         // Default properties set to null, to be set in the child class
         this.schema = null;
         this.data = null;
@@ -55,7 +57,6 @@ export default class Model
     static insert(data, callback) {
         const values = [];
         let query;
-
         Object.keys(data).forEach((key) => {
             if (this.fillable.includes(key)) {
                 values.push(`'${data[key]}'`);
@@ -95,6 +96,16 @@ export default class Model
             if (error) throw error;
 
             callback(new this(JSON.parse(JSON.stringify(results[0]))));
+        });
+    }
+
+    static delete(id, callback){
+        const query = `DELETE FROM ${this.table} WHERE id=${id}`;
+
+        db.query(query, (error,results, fields) => {
+           if (error) throw error;
+
+           callback()
         });
     }
 }

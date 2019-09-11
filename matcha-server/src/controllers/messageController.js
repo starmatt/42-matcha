@@ -1,14 +1,28 @@
 import Message from '../models/Message';
 
-const messageController = {
+const MessageController = {
     add: (req, res) => {
         const data = req.query;
         const message = new Message(data);
+        message.save(null, (results) => {
+            res.send(`Message #${results.insertId} was saved.`);
+        });
+    },
 
-        // message.save(null, )
+    edit: (req, res) => {
+        Message.find(req.params.id, (message) => {
+            message.set('message', req.query.message);
+            message.save(req.query, (results) => {
+                res.send(results);
+            });
+        });
+    },
+
+    delete: (req, res) => {
+        Message.delete(req.params.id, () => {
+            res.send(`The message with id ${req.params.id} is delete`)
+        })
     }
+};
 
-    // edit:
-
-    // delete:
-}
+export default MessageController;

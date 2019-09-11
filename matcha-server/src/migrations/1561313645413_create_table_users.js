@@ -6,6 +6,6 @@ module.exports = {
         username VARCHAR(128) NOT NULL,
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
-    )`,
-    "down": "DROP TABLE IF EXISTS users"
-}
+    );`,
+    "down": `DROP TABLE IF EXISTS users;`
+};
